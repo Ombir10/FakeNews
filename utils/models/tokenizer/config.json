@@ -1,0 +1,7 @@
+{
+    "architectures": ["DistilBertForSequenceClassification"],
+    "model_type": "distilbert",
+    "tokenizer_class": "DistilBertTokenizer",
+    "do_lower_case": true
+  }
+  
