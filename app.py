@@ -4,6 +4,7 @@ from utils import web_scraper
 from utils.tokenization import tokenize
 from transformers import DistilBertForSequenceClassification
 import re
+from utils.news_refiner import refine_news 
 from markupsafe import Markup
 
 app = Flask(__name__)
@@ -47,13 +48,19 @@ def predict():
         
         try:
             # Fetch article using the scraper
-            scraper = web_scraper.NewsScraper(url)
-            scraper.fetch_article()
-            title = scraper.extract_title_from_url()
-            print(title)
-            article_data = scraper.get_article()
-            article = article_data.get('content', '')
-            print("Extracted article content:", article)
+            newscraper1 = web_scraper.NewsScraper(url)
+            newscraper1.fetch_article()
+            article_data = newscraper1.get_article()
+            newscraper2 = web_scraper.News(url)
+            article1 = article_data.get('content')
+            article2 = newscraper2.fetch_news().get('content')
+            newstitle = newscraper1.extract_title_from_url()
+            # newstitle = newscraper2.fetch_news().get('title')
+            print(newstitle)
+            refined_article = refine_news(article1, article2)
+            print("Extracted article1 content:", article1)
+            print("Extracted article2 content:", article2)
+            print("Extracted article3 content:", refined_article)
             # if article:
             #     # Convert article text into vector
             #     article_vector = tfidf_vectorizer.transform([article])
@@ -63,18 +70,17 @@ def predict():
             if article_data.get("status_code") == 403:
                 return render_template('index.html', show_modal=True, modal_message="The content from this URL could not be retrieved. It may be restricted, paywalled, or formatted in an unsupported way.")
 
-            if not article.strip():
+            if not article1.strip():
                 return render_template('index.html', show_modal=True, modal_message="The article content could not be extracted. Please try another URL.")
                 
             # Convert article text into vector
-            article_vector = tfidf_vectorizer.transform([article])
+            article_vector = tfidf_vectorizer.transform([refined_article])
             lang_prediction = model_langid.predict(article_vector)[0]
 
             if lang_prediction == 0:
                 return render_template('index.html', show_modal=True, modal_message="Sorry! This system currently supports only news articles written in English.")
                 
-            input_ids_texts, attention_masks_texts = tokenize([article], [], [])
-            print(input_ids_texts, attention_masks_texts)
+            input_ids_texts, attention_masks_texts = tokenize([refined_article], [], [])
             input_tensor = input_ids_texts.clone().detach().to(device)
             attention_tensor = attention_masks_texts.clone().detach().to(device)
 
@@ -82,9 +88,9 @@ def predict():
                 outputs = model_newsid(input_tensor, attention_mask = attention_tensor)
                 logits = outputs.logits
                 news_prediction = torch.argmax(logits, dim=1).item()
-            prediction = f"News Title: {title}\n\nPrediction: {'Fake News' if news_prediction == 1 else 'Real News'}"
+            prediction = f"News Title: {newstitle}\n\nPrediction: {'Fake News' if news_prediction == 1 else 'Real News'}"
             print('modalmessage', prediction)
-            return render_template('index.html', showmodal = True, modalmessage= Markup(f"News Title: {title}<br><br>Prediction: {'Fake News' if news_prediction == 1 else 'Real News'}"))
+            return render_template('index.html', showmodal = True, modalmessage= Markup(f"News Title: {newstitle}<br><br>Prediction: {'Fake News' if news_prediction == 1 else 'Real News'}"))
             
         except Exception as e:
                 
