@@ -47,9 +47,11 @@ class News:
             article = Article(self.url)
             article.download()
             article.parse()
+            title = article.title
             self.content = article.text
             self.status_code = 200  # Success
             return {
+                'title': title,
                 'content': self.content if self.content else 'Content not found',
                 'status_code': self.status_code
             }
