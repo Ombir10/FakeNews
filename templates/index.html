@@ -4,8 +4,26 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-        body {
-        /*background-image: url('static/background_image.png');*/
+    header {
+      text-align: center;
+      padding-top: 40px;
+    }
+
+    h1 {
+      font-size: 50px;
+      margin-bottom: 5px;
+    }
+
+    .description {
+      font-size: 20px;
+      color: #444;
+      text-align: center;
+      margin-bottom: 30px;
+      font-style: italic;
+      text-shadow: 1px 1px 2px black;
+    }
+      body {
+        background-image: url('static/news.png');
         background-attachment: fixed;
         background-size: 100% 100%;
         margin: 0;
@@ -13,26 +31,25 @@
       }
 
       .msg {
-        width: 600px;
-        margin: auto;
-        position: absolute; /* Positioned relative to its container */
-        top: 29%; /* Push it down 50% of the container height */
-        left:31%;
-        transform: translateY(-50%); /* Adjust it back upwards by 50% of its own height */
-        text-align: center; /* Center text inside */      border: 6px;
-        border-style: ridge;
-      }
-      
-      .details {
-        width: 600px;
-        margin: auto;
-        position: absolute; /* Positioned relative to its container */
-        top: 50%; /* Push it down 50% of the container height */
-        left:28%;
-        transform: translateY(-50%); /* Adjust it back upwards by 50% of its own height */
-        text-align: center; /* Center text inside */
-        padding-bottom: 60px; /* Add padding to ensure the content doesn't touch the edges */
-      }
+      width: 600px;
+      margin: auto;
+      position: absolute;
+      top: 35%;
+      left: 31%;
+      transform: translateY(-50%);
+      text-align: center;
+      border: 6px ridge;
+    }
+
+    .details {
+      width: 600px;
+      margin: auto;
+      position: absolute;
+      top: 65%;
+      left: 28%;
+      transform: translateY(-50%);
+      padding-bottom: 60px;
+    }
 
       form {
         display: flex;
@@ -143,7 +160,7 @@
 
       .loader, .news{
         position: absolute; /* Ensures it can be positioned relative to the page */
-        top: 90%;
+        top: 120%;
         left: 51%;
         transform: translate(-50%, -50%);
         width: 40vw;
@@ -153,9 +170,8 @@
         align-items: center;
         transition: opacity 0.75s;               
         visibility:0.75s;
-        border-style:groove;
-        background-color: #dfdada;
-        position: absolute;
+        border-style:none;
+        background-color: none;
       }
 
       .loader-hidden{
@@ -167,7 +183,7 @@
         content:"";
         width:75px;
         height:75px;
-        border:15px solid #b5def7;
+        border:20px solid #b5def7;
         border-top-color: #7449f5;
         border-radius: 50%;
         animation:loading 0.75s ease infinite;
@@ -188,19 +204,51 @@
         color: red; 
         position: absolute;
         display: none;
-        top: 49%;
+        top: 61%;
         left: 39%;
       }
       .result{
         position:absolute;
         display: none;
-        top:50%;
+        top:70%;
         left:31%;
+    }
+
+    footer {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      background-color: #dcf6fd;
+      color: #333;
+      font-size: 16px;
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .disclaimer {
+      display: inline-block;
+      padding-left: 100%;
+      animation: slide-left 15s linear infinite;
+    }
+
+    @keyframes slide-left {
+      from {
+        transform: translateX(0%);
       }
+
+      to {
+        transform: translateX(-100%);
+      }
+    }
   </style>
 </head>
 
 <body>
+  <header>
+    <h1>Fake News Lab</h1>
+    <div class="description">An AI-driven prototype to help you spot misinformation.</div>
+  </header>
   <div class="msg">
     <h2>This application helps to classify the news based on the URL of the news article.</h2>
   </div>
@@ -223,14 +271,14 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close">&times;</span>
-      <h1 id="modalText"></h1>
+      <h1 id="modalText"></h3>
     </div>
   </div>
   <div id="pred" class="news">
     <!-- Modal content -->
     <div class="news-content">
       <span class="closes">&times;</span>
-      <h1 id="newspred"></h1>
+      <h2 id="newspred"></h2>
     </div>
   </div>
   <script>
@@ -322,6 +370,9 @@
   });
 
   </script>
+    <footer>
+      <div class="disclaimer">⚠️ Disclaimer: This is a beta version of our Fake News Detection tool. Results may not always be accurate and should not be considered as a substitute for independent fact-checking.</div>
+    </footer>
 </body>
 
 </html>
