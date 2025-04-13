@@ -271,7 +271,7 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close">&times;</span>
-      <h1 id="modalText"></h3>
+      <h2 id="modalText"></h2>
     </div>
   </div>
   <div id="pred" class="news">
@@ -302,7 +302,7 @@
       newspred.innerHTML = modalmsg;
       news.style.display = "block";
       document.getElementById('airesult').style.display ="block";
-      
+      document.getElementById('airesult').scrollIntoView({ behavior: "smooth" });
     }
     const loader = document.querySelector(".loader");
           if (loader) {
@@ -351,6 +351,9 @@
           document.querySelector(".loader").style.display = "flex"; // Show loader
           document.getElementById("airesult").style.display = "block";
           errorMessage.style.display = "none";
+          // window.location.hash = "airesult";
+
+          document.getElementById('airesult').scrollIntoView({ behavior: "smooth" });
           setTimeout(function () {
             form.submit(); // Submit the form after validation passes
           }, 500);
@@ -359,14 +362,6 @@
           document.getElementById("airesult").style.display = "none";
         }
       });
-
-    // window.addEventListener("load", () => {
-    //   const loader = document.querySelector(".loader");
-    //   loader.classList.add("loader-hidden");
-    //   loader.addEventListener("transitionend", () =>{
-    //     loader.style.display = "none";
-    //   })
-    // })
   });
 
   </script>
