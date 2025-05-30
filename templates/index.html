@@ -22,15 +22,17 @@
       font-style: italic;
       text-shadow: 1px 1px 2px black;
     }
-      body {
-        background-image: url('static/news.png');
-        background-attachment: fixed;
-        background-size: 100% 100%;
-        margin: 0;
-        height: 100vh; /* Full viewport height */
-      }
 
-      .msg {
+    body {
+      background-image: url('static/news.png');
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      margin: 0;
+      height: 100vh;
+      /* Full viewport height */
+    }
+
+    .msg {
       width: 600px;
       margin: auto;
       position: absolute;
@@ -51,167 +53,191 @@
       padding-bottom: 60px;
     }
 
-      form {
-        display: flex;
-        flex-direction: column; /* Stack rows vertically */
-        gap: 15px; /* Add spacing between rows */
+    form {
+      display: flex;
+      flex-direction: column;
+      /* Stack rows vertically */
+      gap: 15px;
+      /* Add spacing between rows */
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      /* Vertically align label and input */
+      gap: 10px;
+      /* Add horizontal space between label and input */
+    }
+
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      width: 100px;
+      /* Set a fixed width for labels */
+      text-align: right;
+      /* Align text to the right for better appearance */
+    }
+
+    input[type="text"] {
+      flex: 1;
+      /* Inputs take remaining space */
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    input[type="submit"] {
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .search-button {
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #0b7dda;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content,
+    .news-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .closes {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .closes:hover,
+    .closes:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .loader,
+    .news {
+      position: absolute;
+      /* Ensures it can be positioned relative to the page */
+      top: 120%;
+      left: 51%;
+      transform: translate(-50%, -50%);
+      width: 40vw;
+      height: 50vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.75s;
+      visibility: 0.75s;
+      border-style: none;
+      background-color: none;
+    }
+
+    .loader-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader::after {
+      content: "";
+      width: 75px;
+      height: 75px;
+      border: 20px solid #b5def7;
+      border-top-color: #7449f5;
+      border-radius: 50%;
+      animation: loading 0.75s ease infinite;
+      position: absolute;
+      /* Absolutely position inside .loader */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes loading {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
       }
 
-      .form-group {
-        display: flex;
-        align-items: center; /* Vertically align label and input */
-        gap: 10px; /* Add horizontal space between label and input */
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
       }
+    }
 
-      label {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        width: 100px; /* Set a fixed width for labels */
-        text-align: right; /* Align text to the right for better appearance */
-      }
+    .error {
+      color: red;
+      position: absolute;
+      display: none;
+      top: 65%;
+      left: 39%;
+    }
 
-      input[type="text"] {
-        flex: 1; /* Inputs take remaining space */
-        font-size: 16px;
-        padding: 10px;
-        border-radius: 6px;
-      }
-
-      input[type="submit"] {
-        font-size: 16px;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      input[type="submit"]:hover {
-        background-color: #45a049;
-      }
-
-      .search-button {
-        font-size: 16px;
-        padding: 10px 20px;
-        background-color: #2196F3;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      .search-button:hover {
-        background-color: #0b7dda;
-      }
-
-      .modal{
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-      }
-
-      /* Modal Content */
-      .modal-content, .news-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-      }
-
-      /* The Close Button */
-      .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
-      
-      .closes {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-
-      .closes:hover,
-      .closes:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      .loader, .news{
-        position: absolute; /* Ensures it can be positioned relative to the page */
-        top: 120%;
-        left: 51%;
-        transform: translate(-50%, -50%);
-        width: 40vw;
-        height:50vh;
-        display: none;
-        justify-content:center;
-        align-items: center;
-        transition: opacity 0.75s;               
-        visibility:0.75s;
-        border-style:none;
-        background-color: none;
-      }
-
-      .loader-hidden{
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .loader::after{
-        content:"";
-        width:75px;
-        height:75px;
-        border:20px solid #b5def7;
-        border-top-color: #7449f5;
-        border-radius: 50%;
-        animation:loading 0.75s ease infinite;
-        position: absolute; /* Absolutely position inside .loader */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      @keyframes loading {
-        from {
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-        to {
-            transform: translate(-50%, -50%) rotate(360deg);
-        }
-      }
-      .error{
-        color: red; 
-        position: absolute;
-        display: none;
-        top: 61%;
-        left: 39%;
-      }
-      .result{
-        position:absolute;
-        display: none;
-        top:70%;
-        left:31%;
+    .result {
+      position: absolute;
+      display: none;
+      top: 70%;
+      left: 31%;
     }
 
     footer {
@@ -258,7 +284,9 @@
     <form id="newsForm" , action='{{url_for("predict")}}' , method="post">
       <div class="form-group">
         <label for="url"></label>
-        <input type="text" id="url" name="url" placeholder="Enter news URL" pattern="^https:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/.*)?$" title="Enter appropriate URL of the news" required>
+        <input type="text" id="url" name="url" placeholder="Enter news URL"
+          pattern="^https:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/.*)?$" title="Enter appropriate URL of the news"
+          required>
         <button type="submit" class="search-button">Search</button>
       </div>
     </form>
@@ -283,91 +311,99 @@
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-    console.log("JavaScript loaded and running!");
-    var showModal = "{{ show_modal|default(False)|lower }}";
-    var modalMessage = "{{ modal_message|default('') }}";
-    var show_modal = "{{showmodal|default(False)|lower}}";
-    var modalmsg = "{{modalmessage|safe}}";
-    console.log(modalmsg)
-    if (showModal === "true") {
-      var modal = document.getElementById("myModal");
-      var modalText = document.getElementById("modalText");
-      modalText.innerText = modalMessage; // Set modal message
-      modal.style.display = "block"; // Show modal
-    }
-
-    if (show_modal === "true") {
-      var news = document.getElementById("pred");
-      var newspred = document.getElementById("newspred");
-      newspred.innerHTML = modalmsg;
-      news.style.display = "block";
-      document.getElementById('airesult').style.display ="block";
-      document.getElementById('airesult').scrollIntoView({ behavior: "smooth" });
-    }
-    const loader = document.querySelector(".loader");
-          if (loader) {
-              loader.style.display = "none"; // Hide the loader but keep it in the DOM
-          }
-    // Close modal when clicking on the close button
-    document.querySelector(".close").addEventListener("click", function () {
-      document.getElementById("myModal").style.display = "none";
-      
-      document.getElementById("airesult").style.display = "none";
-    });
-
-    // Close modal when clicking outside of it
-    window.onclick = function (event) {
-      var modal = document.getElementById("myModal");
-      if (event.target == modal) {
-        modal.style.display = "none";
+      console.log("JavaScript loaded and running!");
+      var showModal = "{{ show_modal|default(False)|lower }}";
+      var modalMessage = "{{ modal_message|default('') }}";
+      var show_modal = "{{showmodal|default(False)|lower}}";
+      var modalmsg = "{{modalmessage|safe}}";
+      console.log(modalmsg)
+      if (showModal === "true") {
+        var modal = document.getElementById("myModal");
+        var modalText = document.getElementById("modalText");
+        modalText.innerText = modalMessage; // Set modal message
+        modal.style.display = "block"; // Show modal
       }
-    };
 
-    // Close modal when clicking on the close button
-    document.querySelector(".closes").addEventListener("click", function () {
-      document.getElementById("pred").style.display = "none";
-      document.getElementById("airesult").style.display = "none";
-    });
-
-    // Close modal when clicking outside of it
-    window.onclick = function (event) {
-      var modal = document.getElementById("pred");
-      if (event.target == modal) {
-        modal.style.display = "none";
+      if (show_modal === "true") {
+        var news = document.getElementById("pred");
+        var newspred = document.getElementById("newspred");
+        newspred.innerHTML = modalmsg;
+        news.style.display = "block";
+        document.getElementById('airesult').style.display = "block";
+        document.getElementById('airesult').scrollIntoView({ behavior: "smooth" });
       }
-    };
+      const loader = document.querySelector(".loader");
+      if (loader) {
+        loader.style.display = "none"; // Hide the loader but keep it in the DOM
+      }
+      // Close modal when clicking on the close button
+      document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("myModal").style.display = "none";
 
-    // Loader functionality on search button click
-    document
-      .querySelector(".search-button")
-      .addEventListener("click", function (event) {
-        event.preventDefault(); // Prevents form submission until loader is shown
-        // Check if the form is valid
-        const form = document.getElementById("newsForm");
-        const urlInput = document.getElementById("url");
-        const errorMessage = document.getElementById("error-message");
-        if (form.checkValidity()) {
-          // If form is valid, show the loader and submit the form
-          document.querySelector(".loader").style.display = "flex"; // Show loader
-          document.getElementById("airesult").style.display = "block";
-          errorMessage.style.display = "none";
-          // window.location.hash = "airesult";
-
-          document.getElementById('airesult').scrollIntoView({ behavior: "smooth" });
-          setTimeout(function () {
-            form.submit(); // Submit the form after validation passes
-          }, 500);
-        } else {
-          errorMessage.style.display = "block";
-          document.getElementById("airesult").style.display = "none";
-        }
+        document.getElementById("airesult").style.display = "none";
       });
-  });
+
+      // Close modal when clicking outside of it
+      window.onclick = function (event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Close modal when clicking on the close button
+      document.querySelector(".closes").addEventListener("click", function () {
+        document.getElementById("pred").style.display = "none";
+        document.getElementById("airesult").style.display = "none";
+      });
+
+      // Close modal when clicking outside of it
+      window.onclick = function (event) {
+        var modal = document.getElementById("pred");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Loader functionality on search button click
+      document
+        .querySelector(".search-button")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevents form submission until loader is shown
+
+          // Hide any open modals and result area
+          document.getElementById("myModal").style.display = "none";
+          document.getElementById("pred").style.display = "none";
+          document.getElementById("airesult").style.display = "none";
+
+          // Check if the form is valid
+          const form = document.getElementById("newsForm");
+          const urlInput = document.getElementById("url");
+          const errorMessage = document.getElementById("error-message");
+          if (form.checkValidity()) {
+            // If form is valid, show the loader and submit the form
+            document.querySelector(".loader").style.display = "flex"; // Show loader
+            document.getElementById("airesult").style.display = "block";
+            errorMessage.style.display = "none";
+            // window.location.hash = "airesult";
+
+            document.getElementById('airesult').scrollIntoView({ behavior: "smooth" });
+            setTimeout(function () {
+              form.submit(); // Submit the form after validation passes
+            }, 500);
+          } else {
+            errorMessage.style.display = "block";
+            document.getElementById("airesult").style.display = "none";
+          }
+        });
+    });
 
   </script>
-    <footer>
-      <div class="disclaimer">⚠️ Disclaimer: This is a beta version of our Fake News Detection tool. Results may not always be accurate and should not be considered as a substitute for independent fact-checking.</div>
-    </footer>
+  <footer>
+    <div class="disclaimer">⚠️ Disclaimer: This is a beta version of our Fake News Detection tool.
+      Results may not always be accurate and should not be considered as a substitute for independent fact-checking.
+    </div>
+  </footer>
 </body>
 
 </html>
