@@ -37,13 +37,13 @@ def predict():
 
         try:
             article_data, article1 = article_1(url)
-            article2, newstitle = article_2(url)
+            article2, newstitle, stat = article_2(url)
             # Refine and merge the scraped articles for better prediction
             refined_article = refine_news(article1, article2)
             print("Extracted article3 content:", refined_article)
 
             # Handle restricted or failed article access
-            if article_data.get("status_code") == 403:
+            if article_data.get("status_code") == 403 and stat == 403:
                 return render_template(
                     "index.html",
                     show_modal=True,

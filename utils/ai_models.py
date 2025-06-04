@@ -45,9 +45,9 @@ def news_pred(refined_article):
             attentions = outputs.attentions
             news_prediction = torch.argmax(logits, dim=1).item()
     # Average attention: last layer, all heads, from [CLS]
-    last_layer_attention = attentions[-1][0]  # shape: (heads, seq_len, seq_len)
-    cls_attention = last_layer_attention[:, 0, :]  # (heads, seq_len)
-    mean_cls_attention = cls_attention.mean(dim=0).cpu().numpy()  # (seq_len,)
+    last_layer_attention = attentions[-1][0]
+    cls_attention = last_layer_attention[:, 0, :]
+    mean_cls_attention = cls_attention.mean(dim=0).cpu().numpy()
 
     tokens = tokenizer.convert_ids_to_tokens(input_ids_texts[0])
     # Filter out special and subword tokens, but keep original index

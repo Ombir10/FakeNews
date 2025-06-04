@@ -49,16 +49,9 @@ def last_part(lst):
 
 
 def text_preprocessing(text):
-    """
-    Preprocesses the input text by removing special characters, converting to lowercase,
-    removing stopwords, and filtering out short words.
 
-    text: The input text string.
-
-    Returns the cleaned-up text as a string.
-    """
     # Remove special characters and digits using regular expressions
-    text = re.sub(r"[!@#$()-,\n\"%^*?:.;~\[\]\d]", " ", text)
+    text = re.sub(r"[^a-zA-Z\s]", " ", text)
     # Split the text into words and convert to lowercase
     words = text.lower().split()
     # Remove stopwords and words shorter than 3 characters
@@ -72,14 +65,7 @@ def text_preprocessing(text):
 
 
 def refine_news(b_news, p_news):
-    """
-    Refines and preprocesses two pieces of news text (b_news and p_news).
 
-    b_news: The first piece of news (base news).
-    p_news: The second piece of news (potentially matching base news).
-
-    Returns a preprocessed string representing the refined news.
-    """
     # Split base news into sentences
     news1_sentences = b_news.split(". ")
     # Split potential news into lines and remove empty lines

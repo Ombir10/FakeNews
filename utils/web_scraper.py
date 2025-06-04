@@ -30,7 +30,7 @@ class NewsScraper:
             self.content = "Error fetching content"
             self.status_code = response.status_code
         except requests.RequestException as e:
-            # Handle general request exceptions (e.g. connection error)
+            # Handle general request exceptions
             self.content = "Error fetching content"
             self.status_code = 500  # Custom internal error code
 
@@ -48,6 +48,7 @@ class News:
         self.url = url  # News article URL
         self.content = ""  # Placeholder for article text
         self.status_code = None  # HTTP status code placeholder
+        self.title = ""
 
     def extract_title_from_url(self):
         # Extracts a readable title from the URL
@@ -65,12 +66,12 @@ class News:
             article.parse()
 
             # Extract title and content
-            title = article.title
+            self.title = article.title
             self.content = article.text
             self.status_code = 200  # Success
 
             return {
-                "title": title,
+                "title": self.title if self.title else "Content not found",
                 "content": self.content if self.content else "Content not found",
                 "status_code": self.status_code,
             }
@@ -78,7 +79,7 @@ class News:
             # Handle errors during downloading or parsing
             print(f"Error: {e}")
             self.content = "Error fetching content"
-            self.status_code = 430  # Custom error code for parse failure
+            self.status_code = 403  # Custom error code for parse failure
 
             return {"content": self.content, "status_code": self.status_code}
 
@@ -95,5 +96,6 @@ def article_1(url):
 def article_2(url):
     newscraper2 = News(url)
     article2 = newscraper2.fetch_news().get("content")
-    newstitle = newscraper2.extract_title_from_url()
-    return article2, newstitle
+    newstitle = newscraper2.fetch_news().get("title")
+    status = newscraper2.fetch_news().get("status_code")
+    return article2, newstitle, status
